@@ -1,9 +1,0 @@
-* [Главная](README.md)
-
-* 🛠 Установка
-  * [3X-UI Pro (Reality)](manuals/3x-ui-pro-reality.md)
-  * [Каскадный VPN](manuals/cascading-vpn.md)
-  * [Установка XKeen](manuals/xkeen-keenetic.md)
-
-* 🔗 Полезное
-  * [Генератор конфигов](https://rockblack.info/mihomo_generator)
