@@ -1,11 +1,15 @@
-* [Главная](README.md)
+* [Главная](/)
 
-* 🛠 Установка
-  * [3X-UI Pro (Reality)](manuals/3x-ui-pro-reality.md)
-  * [3X-UI (4 инбаунда)](manuals/3x-ui-4-inbounds.md)
-  * [Hysteria2 (Blitz)](manuals/hysteria2-blitz.md)
-  * [Каскадный VPN](manuals/cascading-vpn.md)
-  * [Установка XKeen](manuals/xkeen-keenetic.md)
+* **VPN-сервер**
+  * [🛡 3X-UI Pro с REALITY](manuals/3x-ui-pro-reality.md)
+  * [⚡ 3X-UI с 4 инбаундами](manuals/3x-ui-4-inbounds.md)
+  * [🚀 Hysteria2 (Blitz)](manuals/hysteria2-blitz.md)
+  * [🔗 Каскадный VPN](manuals/cascading-vpn.md)
 
-* 🔗 Полезное
-  * [Генератор конфигов](https://rockblack.info/mihomo_generator)
+* **Роутер**
+  * [📶 XKeen на Keenetic](manuals/xkeen-keenetic.md)
+
+* **Полезное**
+  * [XKeen UI](https://github.com/zxc-rv/XKeen-UI)
+  * [Генератор Outbound](https://zxc-rv.github.io/XKeen-UI/Outbound_Generator/)
+  * [Репозиторий на GitHub](https://github.com/PinkmanXXX/pinkman_manuals)
