@@ -69,19 +69,20 @@ sh -c "$(curl -sSL https://raw.githubusercontent.com/jameszeroX/XKeen/main/insta
 
 ## 5. Подключите свой сервер
 
-Для Xray нужно отредактировать два файла в `/opt/etc/xray/configs/`:
+Для Xray нужны два файла в `/opt/etc/xray/configs/`:
 
 ![Конфигурационные файлы Xray](assets/xkeen-configs.svg)
 
-1. `04_outbounds.json` — подключение к вашему серверу. Проще всего получить
-   его из ссылки `vless://` в [генераторе Outbound](https://zxc-rv.github.io/XKeen-UI/Outbound_Generator/).
-2. `05_routing.json` — какие сайты и IP пускать через прокси.
+1. `04_outbounds.json` — подключение к вашему серверу.
+2. `05_routing.json` — какие сайты и сервисы пускать через прокси.
 
-Запустите проксирование:
+Оба файла собирает наш **[генератор Xray](https://pinkmanxxx.github.io/pinkman_manuals/tools/xray/)**:
+вставьте ссылку `vless://`, отметьте сервисы — и получите одну команду,
+которая сама запишет файлы на роутер и перезапустит XKeen. Для ядра Mihomo
+и ссылок Hysteria2 есть **[генератор Mihomo](https://pinkmanxxx.github.io/pinkman_manuals/tools/mihomo/)**.
 
-```bash
-xkeen -start
-```
+> [!NOTE]
+> Генераторы работают прямо в браузере — ссылки с паролями никуда не отправляются.
 
 Чтобы через прокси ходили только нужные устройства, в веб-интерфейсе откройте
 **Приоритеты подключений → Политики доступа в Интернет**, создайте политику

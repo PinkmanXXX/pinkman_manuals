@@ -1,0 +1,166 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Генератор Xray для XKeen</title>
+<meta name="description" content="Готовые 04_outbounds.json и 05_routing.json для XKeen из ссылки vless://, vmess://, trojan://, ss:// — прямо в браузере">
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🕶️</text></svg>">
+<link rel="stylesheet" href="../lib/ui.css">
+</head>
+<body>
+<header><div class="bar">
+  <a class="brand" href="https://github.com/PinkmanXXX/pinkman_manuals">Pinkman <span>Manuals</span></a>
+  <nav><a class="on" href="../xray/">Xray</a><a href="../mihomo/">Mihomo</a></nav>
+</div></header>
+
+<main>
+  <h1>Конфиг Xray для XKeen</h1>
+  <p class="lead">Вставьте ссылку на свой сервер — получите готовые <code>04_outbounds.json</code> и <code>05_routing.json</code>
+    и одну команду, которая сама положит их на роутер.</p>
+  <div class="privacy">🔒 <span>Всё считается <b>в вашем браузере</b> — ссылки никуда не отправляются</span></div>
+
+  <section class="step">
+    <h2><span class="num">1</span>Ссылки на серверы</h2>
+    <textarea id="links" class="mono" spellcheck="false" placeholder="vless://…&#10;По одной на строку. Можно вставить подписку в base64 целиком."></textarea>
+    <div class="parsed" id="parsed"></div>
+    <p class="hint">Поддерживаются vless (REALITY, TLS, ws, gRPC, xhttp, httpupgrade), vmess, trojan и shadowsocks.
+      Несколько серверов — Xray сам выберет самый быстрый. Hysteria2 работает через <a href="../mihomo/">Mihomo</a>.</p>
+  </section>
+
+  <section class="step">
+    <h2><span class="num">2</span>Что пускать через прокси</h2>
+    <div class="sub">Геобазы на роутере</div>
+    <div class="grid" id="bases"></div>
+    <p class="hint">Какие базы вы выбрали при установке XKeen. Не уверены — оставьте ZKeen: её XKeen ставит по умолчанию.</p>
+    <div class="sub">Сервисы</div>
+    <div class="grid" id="services"></div>
+    <div class="sub">Дополнительно</div>
+    <div class="grid">
+      <label class="opt"><input type="checkbox" id="blockQuic" checked><span>Блокировать QUIC<small>видео через прокси грузится стабильнее</small></span></label>
+      <label class="opt" id="adsOpt"><input type="checkbox" id="blockAds"><span>Блокировать рекламу<small>нужна база V2Fly</small></span></label>
+      <label class="opt"><input type="checkbox" id="finalProxy"><span>Всё остальное — тоже через прокси<small>иначе остальное идёт напрямую</small></span></label>
+    </div>
+    <div class="two">
+      <div><label class="field" for="proxyDomains">Свои сайты через прокси</label>
+        <textarea id="proxyDomains" class="mono" rows="3" style="min-height:76px" placeholder="example.com&#10;chat.example.org"></textarea></div>
+      <div><label class="field" for="directDomains">Свои сайты напрямую</label>
+        <textarea id="directDomains" class="mono" rows="3" style="min-height:76px" placeholder="mybank.ru"></textarea></div>
+    </div>
+    <label class="field" for="tag">Тег основного сервера</label>
+    <input type="text" id="tag" value="vless-reality" spellcheck="false">
+    <p class="hint">XKeen по умолчанию ожидает <code>vless-reality</code> — менять стоит, только если вы правили правила вручную.</p>
+  </section>
+
+  <section class="step">
+    <h2><span class="num">3</span>Готовый конфиг</h2>
+    <div id="result"><div class="empty">Вставьте ссылку в шаг 1 — здесь появятся файлы.</div></div>
+  </section>
+</main>
+<footer>Код открыт: <a href="https://github.com/PinkmanXXX/pinkman_manuals/tree/main/tools">github.com/PinkmanXXX/pinkman_manuals</a> · Проверено на Xray 26 и XKeen 2.0</footer>
+
+<script src="../lib/links.js"></script>
+<script src="../lib/xray.js"></script>
+<script src="../lib/ui.js"></script>
+<script>
+(function () {
+  const { $, esc, store } = UI;
+  const S = PM.XRAY_SERVICES, B = PM.XRAY_BASES;
+  const saved = JSON.parse(store.get('xray') || '{}');
+  let tab = 'cmd', files = null;
+
+  $('#bases').innerHTML = Object.keys(B).map((k) =>
+    '<label class="opt"><input type="checkbox" name="base" value="' + k + '"' + ((saved.bases || ['zkeen']).includes(k) ? ' checked' : '') + '>' +
+    '<span>' + esc(B[k].label) + '<small>' + esc(B[k].hint) + '</small></span></label>').join('');
+  $('#services').innerHTML = S.map((s) =>
+    '<label class="opt" data-svc="' + s.id + '"><input type="checkbox" name="svc" value="' + s.id + '"' +
+    ((saved.services ? saved.services.includes(s.id) : s.on) ? ' checked' : '') + '>' +
+    '<span>' + esc(s.label) + '<small>' + esc(s.hint || '') + '</small></span></label>').join('');
+  ['blockQuic', 'blockAds', 'finalProxy'].forEach((k) => { if (k in saved) $('#' + k).checked = saved[k]; });
+  if (saved.tag) $('#tag').value = saved.tag;
+
+  function opts() {
+    const checked = (n) => Array.from(document.querySelectorAll('input[name=' + n + ']:checked')).map((i) => i.value);
+    return {
+      bases: checked('base'), services: checked('svc'), tag: $('#tag').value.trim() || 'vless-reality',
+      blockQuic: $('#blockQuic').checked, blockAds: $('#blockAds').checked, finalProxy: $('#finalProxy').checked,
+      proxyDomains: $('#proxyDomains').value, directDomains: $('#directDomains').value,
+    };
+  }
+
+  function syncAvailability(o) {
+    S.forEach((s) => {
+      const el = document.querySelector('[data-svc="' + s.id + '"]');
+      const ok = PM.xrayServiceAvailable(s, o.bases);
+      const box = el.querySelector('input');
+      // Без нужной базы галочку снимаем, но помним выбор — вернём, когда база появится.
+      if (!ok && !box.disabled) { box.dataset.want = box.checked ? '1' : ''; box.checked = false; }
+      if (ok && box.disabled) box.checked = box.dataset.want === '1';
+      el.classList.toggle('off', !ok);
+      box.disabled = !ok;
+      const need = Object.keys(B).filter((b) => s[b]).map((b) => B[b].label).join(' или ');
+      el.querySelector('small').textContent = ok ? (s.hint || '') : 'нужна база ' + need;
+    });
+    const ads = o.bases.includes('v2fly');
+    if (!ads && !$('#blockAds').disabled) { $('#blockAds').dataset.want = $('#blockAds').checked ? '1' : ''; $('#blockAds').checked = false; }
+    if (ads && $('#blockAds').disabled) $('#blockAds').checked = $('#blockAds').dataset.want === '1';
+    $('#adsOpt').classList.toggle('off', !ads);
+    $('#blockAds').disabled = !ads;
+  }
+
+  function show() {
+    if (!files) return;
+    const names = Object.keys(files);
+    const body = tab === 'cmd'
+      ? UI.routerCommand(files, '/opt/etc/xray/configs', 'xkeen -xray')
+      : files[tab];
+    $('#out').textContent = body;
+    $('#dl').style.display = tab === 'cmd' ? 'none' : '';
+    $('#how').style.display = tab === 'cmd' ? '' : 'none';
+    return names;
+  }
+
+  function render() {
+    syncAvailability(opts());
+    const o = opts();
+    store.set('xray', JSON.stringify({ bases: o.bases, services: o.services, tag: o.tag, blockQuic: o.blockQuic, blockAds: o.blockAds, finalProxy: o.finalProxy }));
+    const parsed = PM.parseText($('#links').value);
+    let r = null, err = '';
+    if (parsed.proxies.length) {
+      try { r = PM.buildXray(parsed.proxies, o); } catch (e) { err = e.message; }
+    }
+    UI.renderParsed($('#parsed'), parsed, r ? r.skipped : []);
+    if (!r) {
+      files = null;
+      $('#result').innerHTML = err ? '<div class="msg err">' + esc(err) + '</div>' : '<div class="empty">Вставьте ссылку в шаг 1 — здесь появятся файлы.</div>';
+      return;
+    }
+    files = {};
+    Object.keys(r.files).forEach((n) => { files[n] = JSON.stringify(r.files[n], null, 2) + '\n'; });
+    if (!$('#out')) {
+      $('#result').innerHTML =
+        '<div class="tabs" id="tabs"><button data-tab="cmd" class="on">Команда для роутера</button>' +
+        '<button data-tab="04_outbounds.json">04_outbounds.json</button><button data-tab="05_routing.json">05_routing.json</button></div>' +
+        '<div class="out"><pre class="code" id="out"></pre></div>' +
+        '<div class="actions"><button class="btn" id="cp">Скопировать</button><button class="btn ghost" id="dl">Скачать файл</button></div>' +
+        '<ol class="how" id="how"><li>Подключитесь к роутеру: <code>ssh root@192.168.1.1 -p 222</code></li>' +
+        '<li>Вставьте команду целиком и нажмите Enter — файлы запишутся, XKeen перезапустится.</li>' +
+        '<li>Готово. Проверить: <code>xkeen -status</code></li></ol><div id="note"></div>';
+      UI.tabs($('#tabs'), (t) => { tab = t; show(); });
+      $('#cp').onclick = (e) => UI.copy($('#out').textContent, e.target);
+      $('#dl').onclick = () => UI.download(tab, files[tab]);
+    }
+    show();
+    const notes = [];
+    if (r.count > 1) notes.push('Серверов: ' + r.count + '. Xray будет каждую минуту проверять их и выбирать самый быстрый.');
+    if (r.skipped.length) notes.push('Пропущено: ' + r.skipped.map((s) => s.name + ' — ' + s.error).join('; '));
+    $('#note').innerHTML = notes.map((n) => '<div class="msg warn">' + esc(n) + '</div>').join('');
+  }
+
+  document.addEventListener('input', render);
+  document.addEventListener('change', render);
+  render();
+})();
+</script>
+</body>
+</html>

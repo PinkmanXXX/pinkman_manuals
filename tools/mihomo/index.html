@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Генератор Mihomo для XKeen</title>
+<meta name="description" content="Готовый config.yaml Mihomo для XKeen из ссылок vless, hy2, trojan, ss или подписки — прямо в браузере">
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🕶️</text></svg>">
+<link rel="stylesheet" href="../lib/ui.css">
+</head>
+<body>
+<header><div class="bar">
+  <a class="brand" href="https://github.com/PinkmanXXX/pinkman_manuals">Pinkman <span>Manuals</span></a>
+  <nav><a href="../xray/">Xray</a><a class="on" href="../mihomo/">Mihomo</a></nav>
+</div></header>
+
+<main>
+  <h1>Конфиг Mihomo для XKeen</h1>
+  <p class="lead">Ссылки на серверы или подписка — и готовый <code>config.yaml</code> с правилами для нужных сервисов,
+    автовыбором быстрого сервера и веб-панелью. Плюс команда, которая сама положит его на роутер.</p>
+  <div class="privacy">🔒 <span>Всё считается <b>в вашем браузере</b> — ссылки никуда не отправляются</span></div>
+
+  <section class="step">
+    <h2><span class="num">1</span>Серверы</h2>
+    <textarea id="links" class="mono" spellcheck="false" placeholder="vless://…&#10;hy2://…&#10;По одной на строку. Можно вставить подписку в base64 целиком."></textarea>
+    <div class="parsed" id="parsed"></div>
+    <label class="field" for="sub">Или ссылка на подписку</label>
+    <input type="url" id="sub" class="mono" spellcheck="false" placeholder="https://…">
+    <p class="hint">Подписку роутер скачает сам и будет обновлять каждый час. Поддерживаются vless (REALITY, TLS, ws, gRPC, xhttp),
+      vmess, trojan, shadowsocks и Hysteria2.</p>
+  </section>
+
+  <section class="step">
+    <h2><span class="num">2</span>Что пускать через прокси</h2>
+    <div class="sub">Сервисы</div>
+    <div class="grid" id="services"></div>
+    <div class="sub">Дополнительно</div>
+    <div class="grid">
+      <label class="opt"><input type="checkbox" id="perService"><span>Свой выбор сервера для каждого сервиса<small>в панели можно пустить YouTube через один сервер, а Telegram — через другой</small></span></label>
+      <label class="opt"><input type="checkbox" id="blockQuic" checked><span>Блокировать QUIC<small>видео через прокси грузится стабильнее</small></span></label>
+      <label class="opt"><input type="checkbox" id="blockAds"><span>Блокировать рекламу</span></label>
+      <label class="opt"><input type="checkbox" id="finalProxy"><span>Всё остальное — тоже через прокси<small>иначе остальное идёт напрямую</small></span></label>
+    </div>
+    <div class="two">
+      <div><label class="field" for="proxyDomains">Свои сайты через прокси</label>
+        <textarea id="proxyDomains" class="mono" rows="3" style="min-height:76px" placeholder="example.com&#10;chat.example.org"></textarea></div>
+      <div><label class="field" for="directDomains">Свои сайты напрямую</label>
+        <textarea id="directDomains" class="mono" rows="3" style="min-height:76px" placeholder="mybank.ru"></textarea></div>
+    </div>
+  </section>
+
+  <section class="step">
+    <h2><span class="num">3</span>Готовый конфиг</h2>
+    <div id="result"><div class="empty">Добавьте ссылку или подписку в шаг 1 — здесь появится конфиг.</div></div>
+  </section>
+</main>
+<footer>Код открыт: <a href="https://github.com/PinkmanXXX/pinkman_manuals/tree/main/tools">github.com/PinkmanXXX/pinkman_manuals</a> · Проверено на Mihomo 1.19 и XKeen 2.0</footer>
+
+<script src="../lib/links.js"></script>
+<script src="../lib/mihomo.js"></script>
+<script src="../lib/ui.js"></script>
+<script>
+(function () {
+  const { $, esc, store } = UI;
+  const S = PM.MIHOMO_SERVICES;
+  const saved = JSON.parse(store.get('mihomo') || '{}');
+  // Секрет панели создаётся один раз на странице, чтобы не менялся при каждой правке.
+  const secret = Array.from(crypto.getRandomValues(new Uint8Array(12)), (b) => b.toString(16).padStart(2, '0')).join('');
+  let tab = 'cmd', yaml = '';
+
+  $('#services').innerHTML = S.map((s) =>
+    '<label class="opt"><input type="checkbox" name="svc" value="' + s.id + '"' +
+    ((saved.services ? saved.services.includes(s.id) : s.on) ? ' checked' : '') + '>' +
+    '<span>' + esc(s.label) + (s.hint ? '<small>' + esc(s.hint) + '</small>' : '') + '</span></label>').join('');
+  ['perService', 'blockQuic', 'blockAds', 'finalProxy'].forEach((k) => { if (k in saved) $('#' + k).checked = saved[k]; });
+
+  function opts() {
+    return {
+      services: Array.from(document.querySelectorAll('input[name=svc]:checked')).map((i) => i.value),
+      subscription: /^https?:\/\/\S+$/.test($('#sub').value.trim()) ? $('#sub').value.trim() : '',
+      perService: $('#perService').checked, blockQuic: $('#blockQuic').checked, blockAds: $('#blockAds').checked,
+      finalProxy: $('#finalProxy').checked, proxyDomains: $('#proxyDomains').value, directDomains: $('#directDomains').value,
+      secret,
+    };
+  }
+
+  function show() {
+    $('#out').textContent = tab === 'cmd' ? UI.routerCommand({ 'config.yaml': yaml }, '/opt/etc/mihomo', 'xkeen -mihomo') : yaml;
+    $('#dl').style.display = tab === 'cmd' ? 'none' : '';
+  }
+
+  function render() {
+    const o = opts();
+    store.set('mihomo', JSON.stringify({ services: o.services, perService: o.perService, blockQuic: o.blockQuic, blockAds: o.blockAds, finalProxy: o.finalProxy }));
+    const parsed = PM.parseText($('#links').value);
+    UI.renderParsed($('#parsed'), parsed, []);
+    let r = null, err = '';
+    if (parsed.proxies.length || o.subscription) {
+      try { r = PM.buildMihomo(parsed.proxies, o); } catch (e) { err = e.message; }
+    }
+    if ($('#sub').value.trim() && !o.subscription) err = 'Подписка должна начинаться с http:// или https://';
+    if (!r) {
+      yaml = '';
+      $('#result').innerHTML = err ? '<div class="msg err">' + esc(err) + '</div>' : '<div class="empty">Добавьте ссылку или подписку в шаг 1 — здесь появится конфиг.</div>';
+      return;
+    }
+    yaml = r.yaml;
+    if (!$('#out')) {
+      $('#result').innerHTML =
+        '<div class="tabs" id="tabs"><button data-tab="cmd" class="on">Команда для роутера</button><button data-tab="yaml">config.yaml</button></div>' +
+        '<div class="out"><pre class="code" id="out"></pre></div>' +
+        '<div class="actions"><button class="btn" id="cp">Скопировать</button><button class="btn ghost" id="dl">Скачать config.yaml</button></div>' +
+        '<ol class="how"><li>Подключитесь к роутеру: <code>ssh root@192.168.1.1 -p 222</code></li>' +
+        '<li>Если XKeen сейчас работает на Xray, сначала выполните <code>xkeen -mihomo</code></li>' +
+        '<li>Вставьте команду целиком и нажмите Enter — конфиг запишется, XKeen перезапустится.</li>' +
+        '<li>Панель управления: <code>http://192.168.1.1:9090/ui</code>, секрет: <code id="sec"></code></li></ol>';
+      UI.tabs($('#tabs'), (t) => { tab = t; show(); });
+      $('#cp').onclick = (e) => UI.copy($('#out').textContent, e.target);
+      $('#dl').onclick = () => UI.download('config.yaml', yaml);
+    }
+    $('#sec').textContent = secret;
+    show();
+  }
+
+  document.addEventListener('input', render);
+  document.addEventListener('change', render);
+  render();
+})();
+</script>
+</body>
+</html>

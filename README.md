@@ -7,7 +7,7 @@
 [![Инструкций](https://img.shields.io/badge/инструкций-3-3fb950)](#инструкции)
 [![Обновлено](https://img.shields.io/github/last-commit/PinkmanXXX/pinkman_manuals?label=обновлено&color=3fb950)](https://github.com/PinkmanXXX/pinkman_manuals/commits)
 
-[Инструкции](#инструкции) · [Что понадобится](#что-понадобится) · [Полезное](#полезное) · [Поддержать](#поддержать-проект)
+[Инструкции](#инструкции) · [Генераторы](#генераторы-конфигов-для-xkeen) · [Что понадобится](#что-понадобится) · [Полезное](#полезное) · [Поддержать](#поддержать-проект)
 
 </div>
 
@@ -30,6 +30,17 @@
 > Инструкции подготовлены в образовательных целях. Убедитесь, что ваши
 > действия соответствуют законодательству вашей страны.
 
+## Генераторы конфигов для XKeen
+
+Вставьте ссылку на сервер или подписку, отметьте нужные сервисы — и получите
+готовый конфиг и одну команду, которая сама положит его на роутер.
+Всё считается в браузере, ссылки никуда не отправляются.
+
+| | Генератор | Что получится |
+|---|---|---|
+| ⚙️ | [Xray](https://pinkmanxxx.github.io/pinkman_manuals/tools/xray/) | `04_outbounds.json` и `05_routing.json`: серверы, выбор сервисов, реклама, свои сайты |
+| 🧩 | [Mihomo](https://pinkmanxxx.github.io/pinkman_manuals/tools/mihomo/) | `config.yaml` с автовыбором сервера, подпиской, Hysteria2 и веб-панелью |
+
 ## Что понадобится
 
 - VPS с **Ubuntu 22.04/24.04** или **Debian 12/13** и доступом root по SSH
@@ -40,8 +51,6 @@
 
 - [XKeen](https://github.com/jameszeroX/XKeen) и его [вики](https://github.com/jameszeroX/XKeen/wiki) — документация по маршрутизации на Keenetic
 - [XKeen UI](https://github.com/zxc-rv/XKeen-UI) — веб-интерфейс для XKeen
-- [Генератор Outbound](https://zxc-rv.github.io/XKeen-UI/Outbound_Generator/) — превращает ссылку `vless://` в `04_outbounds.json`
-- [Генератор конфигураций Mihomo](https://rockblack.info/mihomo_generator) от RockBlack
 - [IP-адреса для AmneziaWG](https://github.com/RockBlack-VPN/ip-address) — актуальные списки от RockBlack
 
 ## Как устроены скрипты
