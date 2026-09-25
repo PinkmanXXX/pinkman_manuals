@@ -4,7 +4,7 @@
 
 **Пошаговые инструкции: свой VPN-сервер за 15 минут и прокси на роутере Keenetic**
 
-[![Инструкций](https://img.shields.io/badge/инструкций-4-3fb950)](#инструкции)
+[![Инструкций](https://img.shields.io/badge/инструкций-3-3fb950)](#инструкции)
 [![Обновлено](https://img.shields.io/github/last-commit/PinkmanXXX/pinkman_manuals?label=обновлено&color=3fb950)](https://github.com/PinkmanXXX/pinkman_manuals/commits)
 
 [Инструкции](#инструкции) · [Что понадобится](#что-понадобится) · [Полезное](#полезное)
@@ -13,18 +13,21 @@
 
 ---
 
-Здесь собраны короткие проверенные инструкции: как поднять VPN-сервер на
-3X-UI или Hysteria2 и направить трафик через прокси прямо на роутере
-Keenetic с XKeen. Каждая инструкция —
-одна страница: команды, которые нужно скопировать, и схемы нужных настроек.
+Свой VPN-сервер — одной командой. Скрипты из этого репозитория ставят
+3X-UI с REALITY или Hysteria2 на чистый VPS, сами настраивают сертификаты
+и файрвол и выдают готовую ссылку с QR-кодом. А инструкция по XKeen поможет
+пустить трафик через прокси прямо на роутере Keenetic.
+
+```bash
+bash <(curl -fsSL https://raw.githubusercontent.com/PinkmanXXX/pinkman_manuals/main/scripts/3x-ui.sh)
+```
 
 ## Инструкции
 
 | | Инструкция | Что получится | Сложность |
 |---|---|---|---|
-| 🛡 | [3X-UI Pro с REALITY](manuals/3x-ui-pro-reality.md) | Панель, VLESS REALITY и подписки на 443 порту за nginx | ●●○ |
-| ⚡ | [3X-UI с 4 инбаундами](manuals/3x-ui-4-inbounds.md) | То же одной командой, без своих доменов | ●○○ |
-| 🚀 | [Hysteria2 (Blitz)](manuals/hysteria2-blitz.md) | Быстрый протокол на UDP с веб-панелью | ●○○ |
+| 🛡 | [3X-UI + REALITY](manuals/3x-ui.md) | Панель и подключение VLESS REALITY одной командой, без доменов | ●○○ |
+| 🚀 | [Hysteria2](manuals/hysteria2.md) | Быстрый протокол на UDP, друзья добавляются командой `hy2 add` | ●○○ |
 | 📶 | [XKeen на Keenetic](manuals/xkeen-keenetic.md) | Прокси для выбранных устройств прямо на роутере | ●●○ |
 
 > [!WARNING]
@@ -33,9 +36,8 @@ Keenetic с XKeen. Каждая инструкция —
 
 ## Что понадобится
 
-- VPS с **Ubuntu 24.04** или **Debian 12** и доступом по SSH
-- Для 3X-UI Pro — **два домена или сабдомена**, направленных на IP сервера
-  (для «4 инбаундов» домены не нужны)
+- VPS с **Ubuntu 22.04/24.04** или **Debian 12/13** и доступом root по SSH
+- Для Hysteria2 по желанию — домен, направленный на IP сервера
 - Для XKeen — роутер **Keenetic/Netcraze** и USB-флешка
 
 ## Полезное
@@ -46,12 +48,17 @@ Keenetic с XKeen. Каждая инструкция —
 - [Генератор конфигураций Mihomo](https://rockblack.info/mihomo_generator) от RockBlack
 - [IP-адреса для AmneziaWG](https://github.com/RockBlack-VPN/ip-address) — актуальные списки от RockBlack
 
+## Как устроены скрипты
+
+Скрипты ставят только официальные сборки — [3X-UI](https://github.com/MHSanaei/3x-ui)
+и [Hysteria](https://github.com/HyNetworks/hysteria) — в версиях, которые мы
+проверили: версия закреплена в начале каждого скрипта, скачанный файл сверяется
+с контрольной суммой. Код открыт: [scripts/](scripts/).
+
 ## Благодарности
 
-Инструкции опираются на работу авторов этих проектов:
-[x-ui-pro](https://github.com/mozaroc/x-ui-pro) ·
+Скрипты и инструкции опираются на работу авторов этих проектов:
 [3X-UI](https://github.com/MHSanaei/3x-ui) ·
-[Blitz](https://github.com/ReturnFI/Blitz) ·
-[Hysteria](https://github.com/apernet/hysteria) ·
+[Hysteria](https://github.com/HyNetworks/hysteria) ·
 [XKeen](https://github.com/jameszeroX/XKeen) ·
 [Xray-core](https://github.com/XTLS/Xray-core)
