@@ -43,7 +43,7 @@ sudo su -c "bash <(wget -qO- https://raw.githubusercontent.com/mozaroc/x-ui-pro/
 ## Своё подключение REALITY
 
 Скрипт уже создал рабочее подключение. Если нужно добавить ещё одно,
-в панели откройте **Подключения → Добавить подключение**:
+в панели откройте **Подключения → Создать подключение**:
 
 ![Настройки подключения REALITY в 3X-UI](assets/reality-inbound.svg)
 
@@ -51,7 +51,7 @@ sudo su -c "bash <(wget -qO- https://raw.githubusercontent.com/mozaroc/x-ui-pro/
 2. Включите **Proxy Protocol** — так nginx передаст настоящий IP клиента.
 3. Включите **External Proxy**: адрес — ваш домен, порт `443`. Именно он
    попадёт в ссылку для клиента.
-4. Безопасность **REALITY**, в **Dest** — домен для REALITY и порт `9443`,
+4. Безопасность **REALITY**, в **Target** — домен для REALITY и порт `9443`,
    в **SNI** — тот же домен. Нажмите **Get New Cert**, чтобы сгенерировать
    ключи, и сохраните подключение.
 
