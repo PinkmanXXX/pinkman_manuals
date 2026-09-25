@@ -7,7 +7,7 @@
 [![Инструкций](https://img.shields.io/badge/инструкций-3-3fb950)](#инструкции)
 [![Обновлено](https://img.shields.io/github/last-commit/PinkmanXXX/pinkman_manuals?label=обновлено&color=3fb950)](https://github.com/PinkmanXXX/pinkman_manuals/commits)
 
-[Инструкции](#инструкции) · [Что понадобится](#что-понадобится) · [Полезное](#полезное)
+[Инструкции](#инструкции) · [Что понадобится](#что-понадобится) · [Полезное](#полезное) · [Поддержать](#поддержать-проект)
 
 </div>
 
@@ -17,10 +17,6 @@
 3X-UI с REALITY или Hysteria2 на чистый VPS, сами настраивают сертификаты
 и файрвол и выдают готовую ссылку с QR-кодом. А инструкция по XKeen поможет
 пустить трафик через прокси прямо на роутере Keenetic.
-
-```bash
-bash <(curl -fsSL https://raw.githubusercontent.com/PinkmanXXX/pinkman_manuals/main/scripts/3x-ui.sh)
-```
 
 ## Инструкции
 
@@ -54,6 +50,19 @@ bash <(curl -fsSL https://raw.githubusercontent.com/PinkmanXXX/pinkman_manuals/m
 и [Hysteria](https://github.com/HyNetworks/hysteria) — в версиях, которые мы
 проверили: версия закреплена в начале каждого скрипта, скачанный файл сверяется
 с контрольной суммой. Код открыт: [scripts/](scripts/).
+
+## Поддержать проект
+
+Инструкции и скрипты бесплатные. Донат добровольный — он помогает оплачивать
+тестовые серверы и держать скрипты в актуальном состоянии. Спасибо! 💜
+
+| Способ | |
+|---|---|
+| Российской картой, СБП, Tinkoff Pay | [CloudTips](https://pay.cloudtips.ru/p/d4f9e3d1) |
+| Зарубежной картой, Apple Pay, Google Pay | [Buy Me a Coffee](https://buymeacoffee.com/relo.cate) |
+| USDT (TRC-20) | `TS83ViXrdezUpp1eFadqj1rBhGLZaba1c1` |
+| TON | `UQBchO4XFPwF9MMa_tjXpwqTo8IL2FhUDyllhYuFo8WM-Qbf` |
+| Ethereum (ERC-20) | `0xC06F6B3A029d7Ea00705B7028490744e2BC16799` |
 
 ## Благодарности
 
