@@ -11,11 +11,16 @@
 set -Eeuo pipefail
 
 XUI_VERSION="v3.8.5"
+# Ядро Xray для панели. С 26.7.x клиенты на Mihomo и sing-box (Hiddify, FlClash,
+# Clash Verge, Mihomo в XKeen) не проходят REALITY — проверено 2026-09-25.
+# 26.6.27 — последняя версия, с которой работают все клиенты и которую принимает 3X-UI.
+XRAY_CORE="v26.6.27"
 XUI_REPO="MHSanaei/3x-ui"
 RESULT=/root/3x-ui.txt
 XUI_ENV=/etc/x-ui/install-result.env
 # Сайты для маскировки REALITY: нужны TLS 1.3 и HTTP/2. Берём первый доступный.
-SNI_CANDIDATES=(www.microsoft.com www.apple.com dl.google.com www.amazon.com)
+# Apple, iCloud, Microsoft и домены .ru сам Xray не советует — их тут нет.
+SNI_CANDIDATES=(dl.google.com www.amazon.com www.samsung.com www.yahoo.com)
 
 if [[ -t 1 ]]; then
   G=$'\e[32m'; Y=$'\e[33m'; R=$'\e[31m'; B=$'\e[1m'; D=$'\e[2m'; N=$'\e[0m'
@@ -176,6 +181,20 @@ main() {
     api POST setting/update "$(jq -c '.webListen = "127.0.0.1" | .subListen = "127.0.0.1"' <<<"$all")" >/dev/null
     systemctl restart x-ui
     wait_panel
+  fi
+
+  # --- ядро Xray, совместимое со всеми клиентами ---
+  local cur_core
+  cur_core=$(/usr/local/x-ui/bin/xray-linux-* version 2>/dev/null | awk 'NR==1 {print "v" $2}')
+  if [[ $cur_core != "$XRAY_CORE" ]]; then
+    say "Ставлю ядро Xray $XRAY_CORE (совместимо с Hiddify, Mihomo и другими клиентами)"
+    api POST "server/installXray/$XRAY_CORE" '{}' >/dev/null
+    for _ in $(seq 1 30); do
+      cur_core=$(/usr/local/x-ui/bin/xray-linux-* version 2>/dev/null | awk 'NR==1 {print "v" $2}')
+      [[ $cur_core == "$XRAY_CORE" ]] && break
+      sleep 2
+    done
+    [[ $cur_core == "$XRAY_CORE" ]] || warn "Не удалось сменить ядро Xray (сейчас $cur_core). Клиенты на Mihomo и sing-box могут не подключиться."
   fi
 
   # --- подключение VLESS REALITY ---
