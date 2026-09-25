@@ -66,4 +66,4 @@ bash <(curl https://raw.githubusercontent.com/ReturnFI/Blitz/main/install.sh)
 
 ---
 
-[← Все инструкции](../README.md#инструкции) · [Дальше: 🔗 Каскадный VPN →](cascading-vpn.md)
+[← Все инструкции](../README.md#инструкции) · [Дальше: 📶 XKeen на Keenetic →](xkeen-keenetic.md)
