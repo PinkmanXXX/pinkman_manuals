@@ -1,5 +1,7 @@
 # 🛡 3X-UI Pro с REALITY
 
+[← Все инструкции](../README.md#инструкции)
+
 Скрипт [x-ui-pro](https://github.com/mozaroc/x-ui-pro) ставит панель 3X-UI за
 nginx, так что панель, подписки и все подключения работают на одном 443 порту
 и снаружи выглядят как обычный сайт.
@@ -66,3 +68,7 @@ sudo su -c "bash <(wget -qO- https://raw.githubusercontent.com/mozaroc/x-ui-pro/
 ```bash
 sudo su -c "bash <(wget -qO- https://raw.githubusercontent.com/mozaroc/x-ui-pro/master/x-ui-pro.sh) -uninstall yes"
 ```
+
+---
+
+[← Все инструкции](../README.md#инструкции) · [Дальше: ⚡ 3X-UI с 4 инбаундами →](3x-ui-4-inbounds.md)

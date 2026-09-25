@@ -1,5 +1,7 @@
 # 🚀 Hysteria2 (Blitz)
 
+[← Все инструкции](../README.md#инструкции)
+
 [Hysteria2](https://github.com/apernet/hysteria) работает поверх UDP и
 хорошо держит скорость на нестабильных каналах — отличная пара к VLESS.
 Панель [Blitz](https://github.com/ReturnFI/Blitz) ставит его одной командой
@@ -61,3 +63,7 @@ bash <(curl https://raw.githubusercontent.com/ReturnFI/Blitz/main/install.sh)
 
 Ссылку `hy2://` или QR-код отправьте в клиент: Hiddify, v2rayN, Streisand,
 NekoBox.
+
+---
+
+[← Все инструкции](../README.md#инструкции) · [Дальше: 🔗 Каскадный VPN →](cascading-vpn.md)

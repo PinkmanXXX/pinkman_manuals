@@ -1,5 +1,7 @@
 # ⚡ 3X-UI с 4 инбаундами
 
+[← Все инструкции](../README.md#инструкции)
+
 Самый быстрый способ: одна команда — и сервер готов. Тот же скрипт
 [x-ui-pro](https://github.com/mozaroc/x-ui-pro), но домены покупать
 не нужно: он сам выдаёт сабдомены вида `1.2.3.4.cdn-one.org`.
@@ -27,3 +29,7 @@ sudo su -c "bash <(wget -qO- https://raw.githubusercontent.com/mozaroc/x-ui-pro/
 
 Дальше — всё как в [3X-UI Pro с REALITY](3x-ui-pro-reality.md): там же
 команды для резервной копии и удаления.
+
+---
+
+[← Все инструкции](../README.md#инструкции) · [Дальше: 🚀 Hysteria2 (Blitz) →](hysteria2-blitz.md)

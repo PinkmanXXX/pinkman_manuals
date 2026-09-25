@@ -4,11 +4,10 @@
 
 **Пошаговые инструкции: свой VPN-сервер за 15 минут и прокси на роутере Keenetic**
 
-[![Сайт](https://img.shields.io/badge/сайт-открыть-3fb950?logo=readthedocs&logoColor=white)](https://pinkmanxxx.github.io/pinkman_manuals/)
 [![Инструкций](https://img.shields.io/badge/инструкций-5-3fb950)](#инструкции)
 [![Обновлено](https://img.shields.io/github/last-commit/PinkmanXXX/pinkman_manuals?label=обновлено&color=3fb950)](https://github.com/PinkmanXXX/pinkman_manuals/commits)
 
-[Открыть сайт](https://pinkmanxxx.github.io/pinkman_manuals/) · [Инструкции](#инструкции) · [Полезное](#полезное)
+[Инструкции](#инструкции) · [Что понадобится](#что-понадобится) · [Полезное](#полезное)
 
 </div>
 
@@ -28,10 +27,6 @@
 | 🚀 | [Hysteria2 (Blitz)](manuals/hysteria2-blitz.md) | Быстрый протокол на UDP с веб-панелью | ●○○ |
 | 🔗 | [Каскадный VPN](manuals/cascading-vpn.md) | Клиент → сервер в России → сервер за рубежом | ●●● |
 | 📶 | [XKeen на Keenetic](manuals/xkeen-keenetic.md) | Прокси для выбранных устройств прямо на роутере | ●●○ |
-
-> [!TIP]
-> Удобнее читать на [сайте](https://pinkmanxxx.github.io/pinkman_manuals/):
-> там есть поиск, меню и копирование команд в один клик.
 
 > [!WARNING]
 > Инструкции подготовлены в образовательных целях. Убедитесь, что ваши
