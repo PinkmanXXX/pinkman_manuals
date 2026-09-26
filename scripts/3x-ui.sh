@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
-# 3X-UI + VLESS REALITY одной командой — https://github.com/PinkmanXXX/pinkman_manuals
+# 3X-UI + VLESS REALITY одной командой — https://github.com/itsnotkubrick/Reality_Hysteria2
 #
-# Установка:  bash <(curl -fsSL https://raw.githubusercontent.com/PinkmanXXX/pinkman_manuals/main/scripts/3x-ui.sh)
+# Установка:  bash <(curl -fsSL https://raw.githubusercontent.com/itsnotkubrick/Reality_Hysteria2/main/scripts/3x-ui.sh)
 #
 # Ставит официальную панель 3X-UI (версия закреплена ниже) её собственным
 # установщиком, получает для панели сертификат Let's Encrypt на IP, создаёт

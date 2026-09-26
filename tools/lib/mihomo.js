@@ -222,7 +222,7 @@
     rules.push('MATCH,' + (opts.finalProxy ? PROXY : 'DIRECT'));
     cfg.rules = rules;
 
-    const head = '# Сгенерировано: https://pinkmanxxx.github.io/pinkman_manuals/tools/mihomo/\n' +
+    const head = '# Сгенерировано: https://itsnotkubrick.github.io/Reality_Hysteria2/tools/mihomo/\n' +
       '# Файл для XKeen: /opt/etc/mihomo/config.yaml, затем xkeen -restart\n' +
       '# Панель управления: http://IP-роутера:9090/ui (секрет — поле secret ниже)\n';
     return { yaml: head + yaml(cfg).replace(/^\n/, ''), config: cfg, count: proxies.length };

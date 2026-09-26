@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
-# Hysteria2 одной командой — https://github.com/PinkmanXXX/pinkman_manuals
+# Hysteria2 одной командой — https://github.com/itsnotkubrick/Reality_Hysteria2
 #
-# Установка:   bash <(curl -fsSL https://raw.githubusercontent.com/PinkmanXXX/pinkman_manuals/main/scripts/hysteria2.sh)
+# Установка:   bash <(curl -fsSL https://raw.githubusercontent.com/itsnotkubrick/Reality_Hysteria2/main/scripts/hysteria2.sh)
 # Управление:  hy2 help
 #
 # Ставит официальный бинарник Hysteria2 (версия закреплена ниже, контрольная
@@ -12,13 +12,13 @@ set -Eeuo pipefail
 
 HY_VERSION="2.12.3"
 HY_REPO="HyNetworks/hysteria"
-SELF_URL="https://raw.githubusercontent.com/PinkmanXXX/pinkman_manuals/main/scripts/hysteria2.sh"
+SELF_URL="https://raw.githubusercontent.com/itsnotkubrick/Reality_Hysteria2/main/scripts/hysteria2.sh"
 
 BIN=/usr/local/bin/hysteria
 CLI=/usr/local/bin/hy2
 CONF_DIR=/etc/hysteria
 CONF=$CONF_DIR/config.yaml
-STATE=$CONF_DIR/pinkman.env      # настройки установки
+STATE=$CONF_DIR/install.env      # настройки установки
 USERS=$CONF_DIR/users            # строки «имя пароль»
 MASQ_DIR=/var/www/masq
 DATA_DIR=/var/lib/hysteria
@@ -37,6 +37,11 @@ die()  { printf '%s\n' "${R}✗${N}  $*" >&2; exit 1; }
 trap 'die "Ошибка в строке $LINENO. Если это установка — исправьте причину и запустите скрипт ещё раз."' ERR
 
 need_root() { [[ $EUID -eq 0 ]] || die "Запустите от root: sudo -i, затем команду ещё раз."; }
+
+# Прежнее имя файла настроек — переносим, чтобы старые установки не сломались.
+if [[ -f $CONF_DIR/pinkman.env && ! -f $STATE && -w $CONF_DIR ]]; then
+  mv "$CONF_DIR/pinkman.env" "$STATE"
+fi
 
 # ---------- проверки ----------
 
@@ -174,7 +179,7 @@ render_config() {
 write_unit() {
   cat >"$UNIT" <<EOF
 [Unit]
-Description=Hysteria2 Server (pinkman_manuals)
+Description=Hysteria2 Server (Reality_Hysteria2)
 After=network-online.target
 Wants=network-online.target
 StartLimitIntervalSec=600

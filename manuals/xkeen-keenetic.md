@@ -76,10 +76,10 @@ sh -c "$(curl -sSL https://raw.githubusercontent.com/jameszeroX/XKeen/main/insta
 1. `04_outbounds.json` — подключение к вашему серверу.
 2. `05_routing.json` — какие сайты и сервисы пускать через прокси.
 
-Оба файла собирает наш **[генератор Xray](https://pinkmanxxx.github.io/pinkman_manuals/tools/xray/)**:
+Оба файла собирает наш **[генератор Xray](https://itsnotkubrick.github.io/Reality_Hysteria2/tools/xray/)**:
 вставьте ссылку `vless://`, отметьте сервисы — и получите одну команду,
 которая сама запишет файлы на роутер и перезапустит XKeen. Для ядра Mihomo
-и ссылок Hysteria2 есть **[генератор Mihomo](https://pinkmanxxx.github.io/pinkman_manuals/tools/mihomo/)**.
+и ссылок Hysteria2 есть **[генератор Mihomo](https://itsnotkubrick.github.io/Reality_Hysteria2/tools/mihomo/)**.
 
 > [!NOTE]
 > Генераторы работают прямо в браузере — ссылки с паролями никуда не отправляются.

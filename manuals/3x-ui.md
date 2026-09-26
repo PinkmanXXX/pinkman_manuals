@@ -25,7 +25,7 @@
 Подключитесь к серверу по SSH и выполните:
 
 ```bash
-bash <(curl -fsSL https://raw.githubusercontent.com/PinkmanXXX/pinkman_manuals/main/scripts/3x-ui.sh)
+bash <(curl -fsSL https://raw.githubusercontent.com/itsnotkubrick/Reality_Hysteria2/main/scripts/3x-ui.sh)
 ```
 
 Через пару минут скрипт покажет всё нужное:
@@ -61,7 +61,7 @@ bash <(curl -fsSL https://raw.githubusercontent.com/PinkmanXXX/pinkman_manuals/m
 Команду можно запустить с параметрами — например, если порт 443 уже занят:
 
 ```bash
-bash <(curl -fsSL https://raw.githubusercontent.com/PinkmanXXX/pinkman_manuals/main/scripts/3x-ui.sh) --port 8443
+bash <(curl -fsSL https://raw.githubusercontent.com/itsnotkubrick/Reality_Hysteria2/main/scripts/3x-ui.sh) --port 8443
 ```
 
 | Параметр | Что делает |

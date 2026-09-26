@@ -27,7 +27,7 @@
 Подключитесь к серверу по SSH и выполните:
 
 ```bash
-bash <(curl -fsSL https://raw.githubusercontent.com/PinkmanXXX/pinkman_manuals/main/scripts/hysteria2.sh)
+bash <(curl -fsSL https://raw.githubusercontent.com/itsnotkubrick/Reality_Hysteria2/main/scripts/hysteria2.sh)
 ```
 
 ![Установка Hysteria2](assets/script-hysteria2.svg)

@@ -1,11 +1,11 @@
 <div align="center">
 
-<img alt="Pinkman Manuals" src="manuals/assets/banner.svg" width="820">
+<img alt="3X-UI + Hysteria2 Kit" src="manuals/assets/banner.svg" width="820">
 
 **Пошаговые инструкции: свой VPN-сервер за 15 минут и прокси на роутере Keenetic**
 
 [![Инструкций](https://img.shields.io/badge/инструкций-3-3fb950)](#инструкции)
-[![Обновлено](https://img.shields.io/github/last-commit/PinkmanXXX/pinkman_manuals?label=обновлено&color=3fb950)](https://github.com/PinkmanXXX/pinkman_manuals/commits)
+[![Обновлено](https://img.shields.io/github/last-commit/itsnotkubrick/Reality_Hysteria2?label=обновлено&color=3fb950)](https://github.com/itsnotkubrick/Reality_Hysteria2/commits)
 
 [Инструкции](#инструкции) · [Генераторы](#генераторы-конфигов-для-xkeen) · [Что понадобится](#что-понадобится) · [Полезное](#полезное) · [Поддержать](#поддержать-проект)
 
@@ -38,8 +38,8 @@
 
 | | Генератор | Что получится |
 |---|---|---|
-| ⚙️ | [Xray](https://pinkmanxxx.github.io/pinkman_manuals/tools/xray/) | `04_outbounds.json` и `05_routing.json`: серверы, выбор сервисов, реклама, свои сайты |
-| 🧩 | [Mihomo](https://pinkmanxxx.github.io/pinkman_manuals/tools/mihomo/) | `config.yaml` с автовыбором сервера, подпиской, Hysteria2 и веб-панелью |
+| ⚙️ | [Xray](https://itsnotkubrick.github.io/Reality_Hysteria2/tools/xray/) | `04_outbounds.json` и `05_routing.json`: серверы, выбор сервисов, реклама, свои сайты |
+| 🧩 | [Mihomo](https://itsnotkubrick.github.io/Reality_Hysteria2/tools/mihomo/) | `config.yaml` с автовыбором сервера, подпиской, Hysteria2 и веб-панелью |
 
 ## Что понадобится
 
